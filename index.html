@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSD Admin | Partner Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 2rem; }
+        .input-field { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 1rem; padding: 1rem; width: 100%; outline: none; }
+        .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); transition: all 0.2s; }
+        .btn-primary:active { transform: scale(0.98); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-md w-full space-y-6">
+        <div class="text-center">
+            <h1 class="text-3xl font-black tracking-tight text-indigo-400 uppercase">Partner Setup</h1>
+            <p class="text-slate-400 text-[10px] font-bold tracking-widest mt-2 uppercase">MSD Pharma Admin</p>
+        </div>
+
+        <div class="glass-card p-8 space-y-5 shadow-2xl border-t border-white/10">
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Delivery Boy Name</label>
+                <input type="text" id="dbName" placeholder="Enter Name" class="input-field mt-1 text-sm">
+            </div>
+
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">WhatsApp (91XXXXXXXXXX)</label>
+                <input type="tel" id="dbPhone" placeholder="919385352585" class="input-field mt-1 text-sm">
+            </div>
+
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase ml-1">Collection UPI ID</label>
+                <input type="text" id="dbUpi" placeholder="9385352585@ybl" class="input-field mt-1 text-sm">
+            </div>
+
+            <button onclick="generateLink()" class="btn-primary w-full py-4 rounded-2xl font-black uppercase text-xs tracking-widest shadow-lg shadow-indigo-500/20">
+                Generate Partner Link
+            </button>
+        </div>
+
+        <div id="resultBox" class="hidden glass-card p-6 border-emerald-500/30 bg-emerald-500/5">
+            <p class="text-[10px] font-black text-emerald-400 uppercase mb-3">Share this link with your Partner:</p>
+            <div id="finalLink" class="bg-slate-900/50 p-4 rounded-xl break-all text-[10px] font-mono text-slate-300 mb-4 border border-white/5"></div>
+            <button onclick="copyLink()" class="w-full py-3 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all">
+                Copy Link
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateLink() {
+            const phone = document.getElementById('dbPhone').value.trim();
+            const upi = document.getElementById('dbUpi').value.trim();
+            const name = document.getElementById('dbName').value.trim();
+            
+            if(!phone || !upi || !name) return alert("Please fill all fields.");
+
+            // POINTING TO YOUR MAIN WEBSITE URL
+            const mainSiteUrl = "https://thoufiqahamed.in"; 
+            const activationLink = `${mainSiteUrl}?setPartner=${phone}&setUpi=${upi}`;
+
+            document.getElementById('finalLink').innerText = activationLink;
+            document.getElementById('resultBox').classList.remove('hidden');
+        }
+
+        function copyLink() {
+            const link = document.getElementById('finalLink').innerText;
+            navigator.clipboard.writeText(link).then(() => {
+                alert("Link Copied!");
+            });
+        }
+    </script>
+</body>
+</html>
